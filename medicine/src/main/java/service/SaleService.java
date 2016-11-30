@@ -3,8 +3,10 @@ package service;
 import java.util.List;
 
 import dao.SaleDao;
+import entity.Medicines;
+import entity.SaleRecord;
 
-public class SaleService {
+public class SaleService{
 	public SaleService() {
 		super();
 	}
@@ -18,7 +20,11 @@ public class SaleService {
 		this.saleDao = saleDao;
 	}
 	//药物查询
-	public List getAll(String medicine_id){
+	public List<Medicines> getAll(String medicine_id){
 		return saleDao.getAll(medicine_id);
+	}
+	//销售录入
+	public boolean addSales(SaleRecord saleRecord){
+		return saleDao.addSales(saleRecord);
 	}
 }

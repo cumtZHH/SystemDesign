@@ -15,16 +15,16 @@ import entity.SaleRecordItem;
 public class SaleDaoImpl implements SaleDao{
 	@Override
 	//≤È—Ø“©∆∑
-	public List getAll(String medicine_id){
-		ResultSet rs=DbUtil.executeQuery("select * from medicine where medicine_id=?", new Object[]{medicine_id});
-		List list=new ArrayList();
+	public List<Medicines> getAll(String medicine_id){
+		ResultSet rs=DbUtil.executeQuery("select * from medicines where medicine_id=?", new Object[]{medicine_id});
+		List<Medicines> list=new ArrayList();
 		try{
 			while(rs.next()){
 			    Medicines medicines=new Medicines();
-				medicines.setMedicine_id(rs.getString(0));
-				medicines.setMedicineName(rs.getString(1));
-				medicines.setPrice(rs.getDouble(2));
-				medicines.setStore(rs.getInt(3));
+				medicines.setMedicine_id(rs.getString(1));
+				medicines.setMedicineName(rs.getString(2));
+				medicines.setPrice(rs.getDouble(3));
+				medicines.setStore(rs.getInt(4));
 				list.add(medicines);
 			}
 		}catch(SQLException e){

@@ -5,7 +5,20 @@ import java.util.Date;
 public class SaleRecord {
     private String saleRecord_id;
     private Double saleRecordPrice;
-    private Date SaleRecordDate;
+    private Date saleRecordDate;
+    private String person_id;
+	public Date getSaleRecordDate() {
+		return saleRecordDate;
+	}
+	public void setSaleRecordDate(Date saleRecordDate) {
+		this.saleRecordDate = saleRecordDate;
+	}
+	public String getPerson_id() {
+		return person_id;
+	}
+	public void setPerson_id(String person_id) {
+		this.person_id = person_id;
+	}
 	public String getSaleRecord_id() {
 		return saleRecord_id;
 	}
@@ -18,10 +31,5 @@ public class SaleRecord {
 	public void setSaleRecordPrice(Double saleRecordPrice) {
 		this.saleRecordPrice = saleRecordPrice;
 	}
-	public Date getSaleRecordDate() {
-		return SaleRecordDate;
-	}
-	public void setSaleRecordDate(Date saleRecordDate) {
-		SaleRecordDate = saleRecordDate;
-	}
+
 }

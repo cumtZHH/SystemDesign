@@ -14,6 +14,73 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/easyloader.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/locale/easyui-lang-zh_CN.js"></script>
 <script>
+<!--验证规则-->
+$.extend($.fn.validatebox.defaults.rules, {    
+	 mobile: {//value值为文本框中的值
+	        validator: function (value) {
+	            return /^13[0-9]{1}[0-9]{8}$|15[0189]{1}[0-9]{8}$|189[0-9]{8}$/.test(value);
+	        },
+	        message: '请输入11位数字.'
+	    }   
+});
+<!--日期格式化-->
+Date.prototype.format = function (format) {  
+    var o = {  
+        "M+": this.getMonth() + 1, // month  
+        "d+": this.getDate(), // day  
+        "h+": this.getHours(), // hour  
+        "m+": this.getMinutes(), // minute  
+        "s+": this.getSeconds(), // second  
+        "q+": Math.floor((this.getMonth() + 3) / 3), // quarter  
+        "S": this.getMilliseconds()  
+        // millisecond  
+    }  
+    if (/(y+)/.test(format))  
+        format = format.replace(RegExp.$1, (this.getFullYear() + "")  
+            .substr(4 - RegExp.$1.length));  
+    for (var k in o)  
+        if (new RegExp("(" + k + ")").test(format))  
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));  
+    return format;  
+}  
+//权限管理
+var str="${sessionScope['permissions']}";
+<!--函数-->
+$(function () {
+	var showpdeptsn;
+	$('#showPassword').change(function(){
+		if ($('#showPassword').prop('checked')){
+			$('#password').show();
+		}else{
+			$('#password').hide();
+		}
+	});
+	var Common = {
+		    /**
+		     * 格式化日期（不含时间）
+		     */
+		    formatterDate: function (date) {
+		        if (date == undefined) {
+		            return "";
+		        }
+		        /*json格式时间转js时间格式*/
+		        date = date.substr(1, date.length - 2);
+		        var obj = eval('(' + "{Date: new " + date + "}" + ')');
+		        var date = obj["Date"];
+		        if (date.getFullYear() < 1900) {
+		            return "";
+		        }
+		 
+		        var datetime = date.getFullYear()
+		                + "-"// "年"
+		                + ((date.getMonth() + 1) > 10 ? (date.getMonth() + 1) : "0"
+		                        + (date.getMonth() + 1))
+		                + "-"// "月"
+		                + (date.getDate() < 10 ? "0" + date.getDate() : date
+		                        .getDate());
+		        return datetime;
+		    }
+	};
 	<!--数据网络-->
 	$('#dg').datagrid({       
 		pageNumber: 1,

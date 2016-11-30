@@ -7,12 +7,19 @@
 	<constant name="conststruts.devMode" value="true"/>
 	<constant name="struts.i18n.encoding" value="utf-8" />
 	<!-- Struts2的所有Action都需位于package下 -->
-	<package name="medicine" namespace="" extends="struts-default" strict-method-invocation="false">
-		<action name="showBuy"  class="action.BuyAction" method="show">
-			<!-- 配置类型的json的Result -->
+	<package name="medicine" namespace="" extends="struts-default">
+		<action name="queryMedicine" class="action.SaleAction">
+			<result name="success">/WEB-INF/content/sale.jsp</result>
+		</action>
+		<action name="addSale" class="action.SaleAction" method="addSaleRecord">
+			<result name="success">/WEB-INF/content/sale.jsp</result>
+		</action>
+		<action name="addItem" class="action.SaleAction" method="addSession">
+			<result name="success">/WEB-INF/content/sale.jsp</result>
 		</action>
 		<action name="*">
 			<result>/WEB-INF/content/{1}.jsp</result>
 		</action>
+		
 	</package>
 </struts>
