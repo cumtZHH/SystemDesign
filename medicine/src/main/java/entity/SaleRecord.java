@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class SaleRecord {
     private String saleRecord_id;
-    private Double saleRecordPrice;
+    private Double saleRecordTotalPrice;
     private Date saleRecordDate;
     private String person_id;
 	public Date getSaleRecordDate() {
@@ -25,11 +25,12 @@ public class SaleRecord {
 	public void setSaleRecord_id(String saleRecord_id) {
 		this.saleRecord_id = saleRecord_id;
 	}
-	public Double getSaleRecordPrice() {
-		return saleRecordPrice;
+	public Double getSaleRecordTotalPrice() {
+		return saleRecordTotalPrice;
 	}
-	public void setSaleRecordPrice(Double saleRecordPrice) {
-		this.saleRecordPrice = saleRecordPrice;
+	public void setSaleRecordTotalPrice(Double saleRecordTotalPrice) {
+		this.saleRecordTotalPrice = saleRecordTotalPrice;
 	}
+	
 
 }

@@ -39,13 +39,12 @@ public class SaleDaoImpl implements SaleDao{
 			Date day=new Date();
 			DateFormat df = DateFormat.getDateTimeInstance();
 			return DbUtil.executeUpdate("insert into sale_record values(?,?,?,?)",
-					new Object[]{saleRecord.getSaleRecord_id(),saleRecord.getSaleRecordPrice(),df.format(day),/*¬º»Î»À‘±id*/});		
+					new Object[]{saleRecord.getSaleRecord_id(),saleRecord.getSaleRecordTotalPrice(),df.format(day),"00001"});		
 	}
 	public boolean addSalesItem(SaleRecordItem saleRecordItem){
 		// TODO Auto-generated method stub
-		SaleRecord saleRecord=new SaleRecord();
 		Medicines medicines=new Medicines();
-		return DbUtil.executeUpdate("insert into sale_record values(?,?,?,?)",
-				new Object[]{saleRecordItem.getSaleRecordItem_id(),saleRecordItem.getSaleRecordItemNumber(),saleRecord.getSaleRecord_id(),medicines.medicine_id});		
+		return DbUtil.executeUpdate("insert into sale_record_item values(?,?,?,?)",
+				new Object[]{saleRecordItem.getSaleRecordItem_id(),saleRecordItem.getSaleRecordItemNumber(),saleRecordItem.getSaleRecord_id(),saleRecordItem.getMedicine_id()});		
 }
 }

@@ -1,3 +1,7 @@
 .fl{float:left}
 .fr{float:right}
 .topbar{magin-top:300px;}
+.topbar i{font-size:14px;}
+.easyui-linkbutton{height:30px;width:50px;}
+.subtotal { font-weight: bold; }/*合计单元格样式*/
+.footbar{margin-top:50px;width:860px;}

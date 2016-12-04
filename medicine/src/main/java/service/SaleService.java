@@ -5,6 +5,7 @@ import java.util.List;
 import dao.SaleDao;
 import entity.Medicines;
 import entity.SaleRecord;
+import entity.SaleRecordItem;
 
 public class SaleService{
 	public SaleService() {
@@ -26,5 +27,8 @@ public class SaleService{
 	//œ˙ €¬º»Î
 	public boolean addSales(SaleRecord saleRecord){
 		return saleDao.addSales(saleRecord);
+	}
+	public boolean addSalesItem(SaleRecordItem saleRecordItem){
+		return saleDao.addSalesItem(saleRecordItem);
 	}
 }

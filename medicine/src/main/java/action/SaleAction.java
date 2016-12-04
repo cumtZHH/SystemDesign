@@ -19,7 +19,7 @@ import service.SaleService;
 public class SaleAction extends ActionSupport {
 	private SaleService saleService=new SaleService();
 	private String medicine_id;
-	private Double saleRecordPrice; 
+	private Double saleRecordTotalPrice;//总价 
 	private String medicineName;
 	private double price;
 	private int saleRecordNumber;
@@ -41,11 +41,12 @@ public class SaleAction extends ActionSupport {
 	public void setSaleRecordNumber(int saleRecordNumber) {
 		this.saleRecordNumber = saleRecordNumber;
 	}
-	public Double getSaleRecordPrice() {
-		return saleRecordPrice;
+	
+	public Double getSaleRecordTotalPrice() {
+		return saleRecordTotalPrice;
 	}
-	public void setSaleRecordPrice(Double saleRecordPrice) {
-		this.saleRecordPrice = saleRecordPrice;
+	public void setSaleRecordTotalPrice(Double saleRecordTotalPrice) {
+		this.saleRecordTotalPrice = saleRecordTotalPrice;
 	}
 	public SaleService getSaleService() {
 		return saleService;
@@ -59,13 +60,13 @@ public class SaleAction extends ActionSupport {
 	public void setMedicine_id(String medicine_id) {
 		this.medicine_id = medicine_id;
 	}
+	HttpServletRequest request= ServletActionContext.getRequest();
+	HttpSession session=request.getSession();
 	//查询药品信息
 	@Override
 	public String execute() throws Exception{
 		SaleDaoImpl saleDaoImpl=new SaleDaoImpl();
 		saleService.setSaleDao(saleDaoImpl);
-		HttpServletRequest request= ServletActionContext.getRequest();
-		HttpSession session=request.getSession();
 		request.setAttribute("mdinformation",saleService.getAll(medicine_id));
 		//System.out.println(saleService.getAll(medicine_id));
 			return SUCCESS;
@@ -79,20 +80,19 @@ public class SaleAction extends ActionSupport {
 		long now = System.currentTimeMillis();//一个13位的时间戳
 		SaleRecord saleRecord=new SaleRecord();
 		saleRecord.setSaleRecord_id(String.valueOf(r1)+String.valueOf(r2)+String.valueOf(now));//生成随机id
-		saleRecord.setSaleRecordPrice(saleRecordPrice);
+		saleRecord.setSaleRecordTotalPrice(saleRecordTotalPrice);
 	    saleService.addSales(saleRecord);
 	  //插入详细销售记录
-	    HttpServletRequest request= ServletActionContext.getRequest();
-		HttpSession session=request.getSession();
-		List saleList= (List) session.getAttribute("sale");
-		for (int t = 0; t < saleList.size(); t++) {
-	          SaleList sale = (SaleList)saleList.get(t);
-	          SaleRecordItem saleRecordItem=new SaleRecordItem();
-	          saleRecordItem.setSaleRecordItem_id(String.valueOf(r1)+String.valueOf(r2)+String.valueOf(now)+t);
+	    List salelist= (List)session.getAttribute("sale");
+	    SaleRecordItem saleRecordItem=new SaleRecordItem();
+		for (int t = 0; t < salelist.size(); t++) {
+	          SaleList sale = (SaleList)salelist.get(t);
+	          saleRecordItem.setSaleRecordItem_id(saleRecord.getSaleRecord_id()+t);
 	          saleRecordItem.setSaleRecordItemNumber(sale.getSaleRecordNumber());
-	          saleRecordItem.setSaleRecord_id(String.valueOf(r1)+String.valueOf(r2)+String.valueOf(now));
+	          saleRecordItem.setSaleRecord_id(saleRecord.getSaleRecord_id());
 	          saleRecordItem.setMedicine_id(sale.getMedicine_id());
 		}
+		saleService.addSalesItem(saleRecordItem);
 	    return SUCCESS;
 		}
 	//销售详细记录加入session
@@ -105,9 +105,18 @@ public class SaleAction extends ActionSupport {
 			slist.setMedicineName(medicineName);
 			slist.setPrice(price);
 			slist.setSaleRecordNumber(saleRecordNumber);
-			HttpServletRequest request= ServletActionContext.getRequest();
-			HttpSession session=request.getSession();
+			slist.setSubTotal(price*saleRecordNumber);
+			if(session.getAttribute("sale")==null){
+				salelist=new ArrayList();
+			}else{
+			  salelist=(List)session.getAttribute("sale");
+			}
 			salelist.add(slist);
+			double priceTotal=0;
+			for(int i=0;i<salelist.size();i++){
+				priceTotal=priceTotal+salelist.get(i).getSubTotal();
+			}
+			session.setAttribute("ptotal", priceTotal);
 			session.setAttribute("sale",salelist);
 			return SUCCESS;
 	}

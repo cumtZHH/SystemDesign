@@ -5,6 +5,13 @@ public class SaleList {
 	private String medicineName;
 	private double price;
 	private int saleRecordNumber;
+	private Double subTotal;
+	public Double getSubTotal() {
+		return subTotal;
+	}
+	public void setSubTotal(Double subTotal) {
+		this.subTotal = subTotal;
+	}
 	public String getMedicine_id() {
 		return medicine_id;
 	}
