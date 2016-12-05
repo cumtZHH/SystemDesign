@@ -5,6 +5,7 @@ import java.util.List;
 
 import entity.Medicines;
 import entity.Order;
+import entity.OrderItem;
 import entity.Person;
 import entity.Supplier;
 
@@ -18,4 +19,9 @@ public interface BuyDao {
 	public void addOrder(Order order);
 	public void updateOrder(Order order);
 	public void deleteOrder(String orderId);
+	public Medicines getMedicineByMedicineId(String medicineId);
+	public void updateMedicine(Medicines medicine);
+	public void addOrderItem(OrderItem orderItem);
+	public List<OrderItem> getOrderItem(String orderDate, String supplierId);
+	public Order getOrderByOrderId(String orderId);
 }
